@@ -3,6 +3,7 @@
 # Inspired by Werner Lemberg response on 2021-01-21 in the gnu groff mailinglist subject "Huge Filesize of PS file 12M" 
 # This script compresses the multiple consecutive DL (drawline) statements grops output to draw a single line to one DL statement
 # Usage: GropsLineCompress.sh filename > outputfile
+# Usage: cat file | GropsLineCompress.sh  > outputfile
 awk '/ DL/{ORS=" ";print $0; ORS=RS ; next;}{print $0}' $1 | sed 's/ DL/ DL\n/g' | \
 awk '
 BEGIN {
@@ -59,7 +60,6 @@ BEGIN {
 			if( x1 == x2) lijnmode = "V";
 			if( y1 == y2) {
 				lijnmode = "H";
-				print "horiz " x1 " " x2 " " y1 " " y2 > "/dev/stderr"
 			}
 		}
 	}
